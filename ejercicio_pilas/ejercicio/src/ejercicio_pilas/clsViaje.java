@@ -69,4 +69,15 @@ public class clsViaje {
         this.IdHotel = IdHotel;
     }
 
+    @Override
+    public String toString() {
+        return "Viaje\n"
+                + "IdViaje= " + IdViaje+"\n"
+                + ", Destino= " + Destino +"\n"
+                + ", Origen= " + Origen +"\n"
+                + ", CostoUni= " + CostoUni +"\n"
+                + ", IdVuelo= " + IdVuelo +"\n"
+                + ", IdHotel= " + IdHotel;
+    }
+
 }

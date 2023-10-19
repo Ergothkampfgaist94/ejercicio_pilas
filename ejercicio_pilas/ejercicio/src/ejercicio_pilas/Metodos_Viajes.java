@@ -18,18 +18,17 @@ public class Metodos_Viajes {
     }
 
     public String Agregarviaje() {
-
         while (JOptionPane.showConfirmDialog(null,
                 "¿Desea agregar un viaje?")
                 == JOptionPane.YES_NO_OPTION) {
             String destino = preguntarDestino();
+            String hotel = preguntarHotel();
             pilaViaje.apilar(new clsViaje(Integer.toString(cantViajes + 1),
                     destino,
                     "Bogotá",
                     1000000,
                     Integer.toString(cantViajes + 10),
-                    Integer.toString(100)
-            ));
+                    hotel));
             cantViajes++;
         }
 
@@ -57,7 +56,7 @@ public class Metodos_Viajes {
     public String ModificarPilaViaje(String Id_Viaje, int datoModificar) {
 
         boolean paso = false;
-        String mensajeExito;
+        String mensajeExito = "";
         cadena = "";
 
         while (!pilaViaje.estaVacia()) {
@@ -67,21 +66,33 @@ public class Metodos_Viajes {
                 paso = true;
                 switch (datoModificar) {
                     case 1:
-                        capturaViajes.setIdHotel(JOptionPane.showInputDialog(""));
-
+                        capturaViajes.setIdHotel(preguntarHotel());
+                        break;
+                    case 2:
+                        capturaViajes.setDestino(preguntarDestino());
+                        break;
+                    case 3:
+                        JOptionPane.showMessageDialog(null, "SALIENDO");
                         break;
                     default:
-                        throw new AssertionError();
+                        return cadena = "Intente de nuevo";
                 }
-            }
-            {
-
-            }else {
+                pilaAuxViaje.apilar(pilaViaje.getElemento());
+                pilaViaje.desapilar();
+            } else {
+                pilaAuxViaje.apilar(pilaViaje.getElemento());
+                pilaViaje.desapilar();
             }
 
         }
+        if (paso) {
+            mensajeExito = "viaje enconcontrado.\n\n";
+        } else {
+            cadena = "identificaciòn de viaje errado.";
+        }
+        reacomodarPila(pilaAuxViaje);
 
-        return cadena;
+        return mensajeExito + cadena;
     }
 
     private void reacomodarPila(Pila<clsViaje> pilaAuxViaje) {
@@ -103,5 +114,41 @@ public class Metodos_Viajes {
                 options,
                 options[2]);
         return String.valueOf(options[n]);
+    }
+
+    private String preguntarHotel() {
+        boolean hotel = JOptionPane.showConfirmDialog(null,
+                "¿Desea agregar un Hotel?")
+                == JOptionPane.YES_NO_OPTION;
+        if (hotel) {
+            Object[] options = {"Una estrella",
+                "dos estrellas",
+                "tres estrellas"};
+            int n = JOptionPane.showOptionDialog(null,
+                    "Escoja la catgoría del hotel que desea",
+                    "ESCOGER HOTEL",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
+            return String.valueOf(options[n]);
+
+        }
+        return "No se seleccionó hotel";
+    }
+
+    public int escogerPregunta() {
+        Object[] options = {"Modificar destino",
+            "Modificar Hotel"};
+        int n = JOptionPane.showOptionDialog(null,
+                "Escoja el elemento que desea modificar del viaje",
+                "ESCOGER ELEMENTO A MODIFICAR",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]);
+        return n;
     }
 }

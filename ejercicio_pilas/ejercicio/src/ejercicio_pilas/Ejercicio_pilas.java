@@ -14,7 +14,8 @@ public class Ejercicio_pilas {
             option = Integer.parseInt(JOptionPane.showInputDialog("Seleccione loq ue desea hacer\n"
                     + "1. agregar viaje\n"
                     + "2. mostrar viaje\n"
-                    + "3. salir\n"));
+                    + "3. modificar viaje\n"
+                    + "4. salir\n"));
             switch (option) {
                 case 1:
                     JOptionPane.showMessageDialog(null, nuevoviaje.Agregarviaje());
@@ -23,6 +24,10 @@ public class Ejercicio_pilas {
                     JOptionPane.showMessageDialog(null, nuevoviaje.MostrarPila());
                     break;
                 case 3:
+                    JOptionPane.showMessageDialog(null, nuevoviaje.ModificarPilaViaje(JOptionPane.showInputDialog("Digite el identificador del viaje"),
+                            nuevoviaje.escogerPregunta()));
+                    break;
+                case 4:
 
                     break;
                 default:
